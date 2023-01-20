@@ -13,30 +13,24 @@ namespace Xyz.Vasd.FakePass
             public FakePassInjector Injector;
         }
 
-        //public bool AutoInject;
-        //public bool AutoFindInjector;
-        //public FakePassInjector Injector;
-
         public InjectionSettingsData InjectionSetttings;
 
         protected virtual object Source => this;
 
-        private void OnDestroy()
+        private void OnEnable()
+        {
+            if (InjectionSetttings.AutoFindInjector) FindInjector();
+            if (InjectionSetttings.AutoInject) Attach();
+        }
+
+        private void OnDisable()
         {
             Detach();
         }
 
-        private void Update()
+        private void OnDestroy()
         {
-            if (InjectionSetttings.AutoFindInjector) FindInjector();
-
-            if (!isActiveAndEnabled)
-            {
-                Detach();
-                return;
-            }
-
-            if (InjectionSetttings.AutoInject) Attach();
+            Detach();
         }
 
         [ContextMenu(nameof(Attach) + "()")]

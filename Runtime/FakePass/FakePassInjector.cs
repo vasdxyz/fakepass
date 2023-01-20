@@ -157,7 +157,7 @@ namespace Xyz.Vasd.FakePass
                             var injection = new Injection<OnCleanupAction>
                             {
                                 Source = source,
-                                Action = method.CreateDelegate(_types.ExecuteAction, source) as OnCleanupAction
+                                Action = method.CreateDelegate(_types.CleanupAction, source) as OnCleanupAction
                             };
                             injections.Add(injection);
                         }
@@ -184,7 +184,7 @@ namespace Xyz.Vasd.FakePass
                     var list = injections[key];
                     if (list == null) continue;
 
-                    list.Select(injection => injection.Source != source);
+                    list = list.Where(injection => injection.Source != source).ToList();
                     injections[key] = list;
                 }
             }
@@ -198,7 +198,7 @@ namespace Xyz.Vasd.FakePass
                     var list = injections[key];
                     if (list == null) continue;
 
-                    list.Select(injection => injection.Source != source);
+                    list = list.Where(injection => injection.Source != source).ToList();
                     injections[key] = list;
                 }
             }
@@ -212,7 +212,7 @@ namespace Xyz.Vasd.FakePass
                     var list = injections[key];
                     if (list == null) continue;
 
-                    list.Select(injection => injection.Source != source);
+                    list = list.Where(injection => injection.Source != source).ToList();
                     injections[key] = list;
                 }
             }
